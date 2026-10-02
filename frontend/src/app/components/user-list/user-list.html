@@ -1,0 +1,25 @@
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Type user</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (user of users(); track user.id) {
+                <tr>
+                    <!-- TODO: fetch type user and display type user name -->
+                    <td>{{user.id}}</td>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>EDIT OR REMOVE</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

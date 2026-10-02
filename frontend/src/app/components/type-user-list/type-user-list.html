@@ -1,0 +1,21 @@
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (typeUser of typeUsers(); track typeUser.id) {
+                <tr>
+                    <!-- TODO: fetch type user and display type user name -->
+                    <td>{{typeUser.id}}</td>
+                    <td>{{typeUser.typeName}}</td>
+                    <td>EDIT OR REMOVE</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
