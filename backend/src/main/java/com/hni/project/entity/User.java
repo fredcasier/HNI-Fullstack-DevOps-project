@@ -1,5 +1,6 @@
 package com.hni.project.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class User {
     @Column (name="email")
     private String email;
 
-    @ManyToOne 
+    @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn (name="type_id")
     private TypeUser typeUser;
 }
