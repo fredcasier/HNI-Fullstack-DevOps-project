@@ -13,7 +13,9 @@
                     <!-- TODO: fetch type user and display type user name -->
                     <td>{{typeUser.id}}</td>
                     <td>{{typeUser.typeName}}</td>
-                    <td>EDIT OR REMOVE</td>
+                    <td>
+                        <button (click)="deleteTypeUser(typeUser.id)" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>

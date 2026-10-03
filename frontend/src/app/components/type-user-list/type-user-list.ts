@@ -27,4 +27,10 @@ export class TypeUserList {
     this.typeUsers.set(data);
   }
 
+  deleteTypeUser(typeUserId: number) {
+    this.typeUserService.deleteTypeUser(typeUserId).subscribe(
+      () => this.listUsers(this.typeUsers().filter(typeUser => typeUser.id !== typeUserId))
+    );
+  }
+
 }

@@ -14,6 +14,11 @@ export class TypeUserService {
             map(response => response._embedded.typeUsers)
         );
     }
+
+    deleteTypeUser(typeUserId: number): Observable<TypeUser> {
+        const deleteUrl = this.typeUserUrl + "/" + typeUserId;
+        return this.httpClient.delete<TypeUser>(deleteUrl);
+    }
 }
 
 interface GetResponseTypeUsers {

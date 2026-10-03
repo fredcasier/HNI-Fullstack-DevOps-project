@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { User } from '../commun/user';
+import { response } from 'express';
 
 @Service()
 export class UserService {
@@ -14,6 +15,11 @@ export class UserService {
         return this.httpClient.get<GetResponseUsers>(this.userUrl).pipe(
             map(response => response._embedded.users)
         );
+    }
+
+    deleteUser(userId: number): Observable<User> {
+        const deleteUrl = this.userUrl + "/" + userId;
+        return this.httpClient.delete<User>(deleteUrl);
     }
 }
 

@@ -1,4 +1,7 @@
 <div>
+    <a routerLink="user-form">
+        <button class="btn btn-primary">Add new user</button>
+    </a>
     <table>
         <thead>
             <tr>
@@ -11,14 +14,19 @@
         </thead>
         <tbody>
             @for (user of users(); track user.id) {
-                <tr>
-                    <!-- TODO: fetch type user and display type user name -->
-                    <td>{{user.id}}</td>
-                    <td>{{user.firstName}}</td>
-                    <td>{{user.lastName}}</td>
-                    <td>{{user.email}}</td>
-                    <td>EDIT OR REMOVE</td>
-                </tr>
+            <tr>
+                <!-- TODO: fetch type user and display type user name -->
+                <td>{{user.id}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <a routerLink="user-form/{{user.id}}">
+                        <button class="btn btn-primary btn-sm">Edit</button>
+                    </a>
+                    <button (click)="deleteUser(user.id)" class="btn btn-danger btn-sm">Delete</button>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
