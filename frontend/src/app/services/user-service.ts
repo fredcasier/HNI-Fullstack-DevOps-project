@@ -18,6 +18,21 @@ export class UserService {
         );
     }
 
+    getUser(userId: number): Observable<User> {
+        const getUrl = this.userUrl + "/" + userId + "?projection=userWithTypeName";
+        return this.httpClient.get<User>(getUrl);
+    }
+
+    updateUser(user: User):Observable<User> {
+        const putUrl = this.userUrl + "/" + user.id
+        return this.httpClient.put<User>(putUrl, {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            typeUser: `${this.typeUserUrl}/${user.typeUser.id}`
+        });
+    }
+
     deleteUser(userId: number): Observable<User> {
         const deleteUrl = this.userUrl + "/" + userId;
         return this.httpClient.delete<User>(deleteUrl);
@@ -34,9 +49,9 @@ export class UserService {
 }
 
 interface GetResponseUsers {
-    _embedded:{
-            users: User[]
-        }
+    _embedded: {
+        users: User[]
+    }
 }
 
 interface NewUser {

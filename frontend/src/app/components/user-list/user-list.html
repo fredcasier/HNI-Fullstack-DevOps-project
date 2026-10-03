@@ -16,7 +16,7 @@
             @for (user of users(); track user.id) {
             <tr>
                 <!-- TODO: fetch type user and display type user name -->
-                <td>{{user.id}}</td>
+                <td>{{user.typeUser.typeName}}</td>
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.email}}</td>

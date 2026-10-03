@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { TypeUser } from '../../commun/type-user';
 import { TypeUserService } from '../../services/type-user-service';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [],
+  imports: [RouterLink],
   selector: 'app-type-user-list',
   styleUrl: './type-user-list.css',
   templateUrl: './type-user-list.html',
@@ -23,7 +24,6 @@ export class TypeUserList {
   }
 
   listUsers(data: TypeUser[]) {
-    console.log("Logging data: " + data);
     this.typeUsers.set(data);
   }
 

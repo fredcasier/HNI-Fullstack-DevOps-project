@@ -19,10 +19,20 @@ export class TypeUserService {
         const deleteUrl = this.typeUserUrl + "/" + typeUserId;
         return this.httpClient.delete<TypeUser>(deleteUrl);
     }
+
+    addTypeUser(typeUser: NewTypeUser): Observable<TypeUser> {
+        return this.httpClient.post<TypeUser>(this.typeUserUrl, {
+            typeName: typeUser.typeName
+        });
+    }
 }
 
 interface GetResponseTypeUsers {
     _embedded: {
         typeUsers: TypeUser[]
     }
+}
+
+interface NewTypeUser {
+    typeName: string;
 }

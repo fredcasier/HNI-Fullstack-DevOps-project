@@ -1,1 +1,7 @@
-<p>type-user-form works!</p>
+<form [formGroup]="typeUserFormGroup" (ngSubmit)="onSubmit()">
+	<div>
+		<label for="typeName">Type name</label>
+		<input id="typeName" type="text" formControlName="typeName">
+	</div>
+	<button type="submit" class="btn btn-primary btn-sm">Add user type</button>
+</form>
