@@ -8,6 +8,7 @@ import { response } from 'express';
 export class UserService {
 
     private userUrl = "http://localhost:8080/api/users";
+    private typeUserUrl = "http://localhost:8080/api/typeUsers";
 
     private httpClient = inject(HttpClient);
 
@@ -21,10 +22,26 @@ export class UserService {
         const deleteUrl = this.userUrl + "/" + userId;
         return this.httpClient.delete<User>(deleteUrl);
     }
+
+    addUser(user: NewUser): Observable<User> {
+        return this.httpClient.post<User>(this.userUrl, {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            typeUser: `${this.typeUserUrl}/${user.typeUser.id}`
+        });
+    }
 }
 
 interface GetResponseUsers {
     _embedded:{
             users: User[]
         }
+}
+
+interface NewUser {
+    firstName: string;
+    lastName: string;
+    email: string;
+    typeUser: { id: number };
 }

@@ -1,1 +1,20 @@
-<p>user-form works!</p>
+<form [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
+	<div>
+		<label for="firstName">First name</label>
+		<input id="firstName" type="text" formControlName="firstName">
+
+		<label for="lastName">Last name</label>
+		<input id="lastName" type="text" formControlName="lastName">
+
+		<label for="email">Email</label>
+		<input id="email" type="email" formControlName="email">
+
+		<label for="typeUser">User type</label>
+        <select  id="typeUser" formControlName="typeUser">
+            @for (typeUser of typeUsers(); track typeUser.id) {
+				<option [ngValue]="typeUser">{{typeUser.typeName}}</option>
+            }
+        </select>
+	</div>
+    <button type="submit" class="btn btn-primary btn-sm">Add user</button>
+</form>
