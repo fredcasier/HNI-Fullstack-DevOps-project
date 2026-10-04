@@ -27,6 +27,6 @@ public class TypeUser {
     @Column (name="type_name")
     private String typeName;
 
-    @OneToMany (mappedBy = "typeUser", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "typeUser", cascade = CascadeType.REMOVE)
     private List<User> users;
 }
