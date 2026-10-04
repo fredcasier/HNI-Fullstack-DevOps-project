@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { User } from '../commun/user';
 import { response } from 'express';
 
@@ -30,7 +30,15 @@ export class UserService {
             lastName: user.lastName,
             email: user.email,
             typeUser: `${this.typeUserUrl}/${user.typeUser.id}`
-        });
+        }).pipe(
+            switchMap(updatedUser => this.httpClient.put<void>(
+                `${this.userUrl}/${user.id}/type-user`,
+                null,
+                { params: { typeUserId: user.typeUser.id } }
+            ).pipe(
+                map(() => updatedUser)
+            ))
+        );
     }
 
     deleteUser(userId: number): Observable<User> {
