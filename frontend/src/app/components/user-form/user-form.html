@@ -19,6 +19,8 @@
 	<a routerLink="/users">
 		<button class="btn btn-danger btn-sm">Annuler</button>
 	</a>
-	<button type="submit" class="btn btn-primary btn-sm">Add user</button>
+	<button type="submit" class="btn btn-primary btn-sm">
+		{{existingUser ? 'Update user' : 'Add user'}}
+	</button>
 
 </form>

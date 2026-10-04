@@ -15,9 +15,19 @@ export class TypeUserService {
         );
     }
 
+    getTypeUser(typeUserId: number): Observable<TypeUser> {
+        return this.httpClient.get<TypeUser>(`${this.typeUserUrl}/${typeUserId}`);
+    }
+
     deleteTypeUser(typeUserId: number): Observable<TypeUser> {
         const deleteUrl = this.typeUserUrl + "/" + typeUserId;
         return this.httpClient.delete<TypeUser>(deleteUrl);
+    }
+
+    updateTypeUser(typeUser: TypeUser): Observable<TypeUser> {
+        return this.httpClient.put<TypeUser>(`${this.typeUserUrl}/${typeUser.id}`, {
+            typeName: typeUser.typeName
+        });
     }
 
     addTypeUser(typeUser: NewTypeUser): Observable<TypeUser> {
