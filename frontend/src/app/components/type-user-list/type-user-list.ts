@@ -28,6 +28,10 @@ export class TypeUserList {
   }
 
   deleteTypeUser(typeUserId: number) {
+    if (!window.confirm('Deleting this user type will delete all users with that type. \nDo you wish to continue ?')) {
+      return;
+    }
+
     this.typeUserService.deleteTypeUser(typeUserId).subscribe(
       () => this.listUsers(this.typeUsers().filter(typeUser => typeUser.id !== typeUserId))
     );
