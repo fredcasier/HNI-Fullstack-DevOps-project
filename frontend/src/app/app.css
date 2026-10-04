@@ -1,22 +1,54 @@
 .site-header {
-	padding: 1rem 1.5rem;
-	background: #f3f4f6;
-	border-bottom: 1px solid #d1d5db;
+	padding: 0;
+	overflow: hidden;
+	background: var(--color-ink);
+	border-bottom: 1px solid var(--color-border);
 }
 
-nav {
+.site-header nav {
 	display: flex;
-	gap: 0.75rem;
+	align-items: center;
+	min-height: 3.75rem;
 }
 
-nav a {
-	padding: 0.6rem 1rem;
+.site-header a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 3.75rem;
+	padding: 0 1.25rem;
 	color: #fff;
-	background: #2563eb;
-	border-radius: 4px;
+	font-weight: 600;
 	text-decoration: none;
 }
 
-nav a:hover {
-	background: #1d4ed8;
+.site-header .brand {
+	margin-right: auto;
+	font-size: 1.1rem;
+}
+
+.site-header nav a:not(.brand):hover,
+.site-header nav a:not(.brand):focus-visible {
+	background: #435260;
+}
+
+.site-header a:focus-visible {
+	outline: 3px solid var(--color-blue);
+	outline-offset: -3px;
+}
+
+@media (max-width: 30rem) {
+	.site-header nav {
+		flex-wrap: wrap;
+	}
+
+	.site-header .brand {
+		width: 100%;
+		min-height: 3rem;
+	}
+
+	.site-header a:not(.brand) {
+		flex: 1;
+		justify-content: center;
+		min-height: 2.75rem;
+	}
 }
