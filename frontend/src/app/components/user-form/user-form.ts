@@ -1,9 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TypeUser } from '../../commun/type-user';
 import { TypeUserService } from '../../services/type-user-service';
 import { UserService } from '../../services/user-service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   imports: [ReactiveFormsModule, RouterLink],
@@ -13,6 +13,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 })
 export class UserForm {
   userFormGroup!: FormGroup;
+  private router = inject(Router);
 
   typeUsers = signal<TypeUser[]>([]);
 
@@ -67,10 +68,14 @@ export class UserForm {
     console.log(user);
 
     if (this.existingUser) {
-      this.userService.updateUser({ ...user, id: this.userId }).subscribe();
+      this.userService.updateUser({ ...user, id: this.userId }).subscribe(() => {
+        this.router.navigate(['/users']);
+      });
     }
     else {
-      this.userService.addUser(user).subscribe();
+      this.userService.addUser(user).subscribe(() => {
+        this.router.navigate(['/users']);
+      });
     }
   }
 }
