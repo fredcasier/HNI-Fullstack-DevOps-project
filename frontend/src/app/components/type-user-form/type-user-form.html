@@ -1,7 +1,7 @@
-<form [formGroup]="typeUserFormGroup" (ngSubmit)="onSubmit()">
+<form [formGroup]="typeUserFormGroup" (ngSubmit)="onSubmit()" ngNativeValidate>
 	<div>
 		<label for="typeName">Type name</label>
-		<input id="typeName" type="text" formControlName="typeName">
+		<input id="typeName" type="text" formControlName="typeName" required>
 	</div>
 	<a routerLink="/types">
 		<button type="button" class="btn btn-danger btn-sm">Cancel</button>

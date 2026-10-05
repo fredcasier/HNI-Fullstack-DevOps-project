@@ -1,16 +1,16 @@
-<form [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
+<form [formGroup]="userFormGroup" (ngSubmit)="onSubmit()" ngNativeValidate>
 	<div>
 		<label for="firstName">First name</label>
-		<input id="firstName" type="text" formControlName="firstName">
+		<input id="firstName" type="text" formControlName="firstName" required>
 
 		<label for="lastName">Last name</label>
-		<input id="lastName" type="text" formControlName="lastName">
+		<input id="lastName" type="text" formControlName="lastName" required>
 
 		<label for="email">Email</label>
-		<input id="email" type="email" formControlName="email">
+		<input id="email" type="email" formControlName="email" required email>
 
 		<label for="typeUser">User type</label>
-		<select id="typeUser" formControlName="typeUser">
+		<select id="typeUser" formControlName="typeUser" required>
 			@for (typeUser of typeUsers(); track typeUser.id) {
 			<option [ngValue]="typeUser">{{typeUser.typeName}}</option>
 			}
