@@ -65,8 +65,6 @@ export class UserForm {
 
   onSubmit() {
     let user = this.userFormGroup.value;
-    console.log(user);
-
     if (this.existingUser) {
       this.userService.updateUser({ ...user, id: this.userId }).subscribe(() => {
         this.router.navigate(['/users']);
