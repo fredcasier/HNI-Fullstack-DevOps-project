@@ -1,5 +1,11 @@
 <div>
+    @if (!typeUsersLoaded() || !usersLoaded()) {
+    <p>Loading data ...</p>
+    } @else {
+    @if (typeUsers().length > 0) {
     <a class="btn btn-primary list-add-action" routerLink="/user-form">Add new user</a>
+    }
+    @if (users().length > 0) {
     <table>
         <thead>
             <tr>
@@ -28,4 +34,12 @@
             }
         </tbody>
     </table>
+    } @else {
+    @if (typeUsers().length === 0) {
+    <p>Please, add a TypeUser to be able to add a User</p>
+    } @else {
+    <p>There is no User, Please add one</p>
+    }
+    }
+    }
 </div>

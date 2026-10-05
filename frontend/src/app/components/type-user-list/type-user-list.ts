@@ -11,20 +11,21 @@ import { RouterLink } from '@angular/router';
 })
 export class TypeUserList {
   typeUsers = signal<TypeUser[]>([]);
-
+  typeUsersLoaded = signal(false);
 
   constructor(private typeUserService: TypeUserService) { }
 
   ngOnInit() {
     this.typeUserService.getUsers().subscribe(
       data => {
-        this.listUsers(data);
+        this.listTypeUsers(data);
       }
     );
   }
 
-  listUsers(data: TypeUser[]) {
+  listTypeUsers(data: TypeUser[]) {
     this.typeUsers.set(data);
+    this.typeUsersLoaded.set(true);
   }
 
   deleteTypeUser(typeUserId: number) {
@@ -33,7 +34,7 @@ export class TypeUserList {
     }
 
     this.typeUserService.deleteTypeUser(typeUserId).subscribe(
-      () => this.listUsers(this.typeUsers().filter(typeUser => typeUser.id !== typeUserId))
+      () => this.listTypeUsers(this.typeUsers().filter(typeUser => typeUser.id !== typeUserId))
     );
   }
 
