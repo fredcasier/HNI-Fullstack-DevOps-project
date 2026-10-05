@@ -4,32 +4,31 @@
     } @else {
     <a class="btn btn-primary list-add-action" routerLink="/type-form">Add new user type</a>
     @if (typeUsers().length > 0) {
-        <table>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (typeUser of typeUsers(); track typeUser.id) {
-                <tr>
-                    <!-- TODO: fetch type user and display type user name -->
-                    <td>{{typeUser.id}}</td>
-                    <td>{{typeUser.typeName}}</td>
-                    <td>
-                        <a routerLink="/type-form/{{typeUser.id}}">
-                            <button class="btn btn-primary btn-sm">Edit</button>
-                        </a>
-                        <button (click)="deleteTypeUser(typeUser.id)" class="btn btn-danger btn-sm">Delete</button>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (typeUser of typeUsers(); track typeUser.id) {
+            <tr>
+                <td><a class="type-user-details-link" routerLink="/type-details/{{typeUser.id}}">{{typeUser.id}}</a></td>
+                <td><a class="type-user-details-link" routerLink="/type-details/{{typeUser.id}}">{{typeUser.typeName}}</a></td>
+                <td>
+                    <a routerLink="/type-form/{{typeUser.id}}">
+                        <button class="btn btn-primary btn-sm">Edit</button>
+                    </a>
+                    <button (click)="deleteTypeUser(typeUser.id)" class="btn btn-danger btn-sm">Delete</button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
     } @else {
-        <p>There is no TypeUser, Please add one</p>
+    <p>There is no TypeUser, Please add one</p>
     }
     }
 </div>

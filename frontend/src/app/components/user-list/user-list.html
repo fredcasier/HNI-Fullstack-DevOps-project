@@ -19,11 +19,10 @@
         <tbody>
             @for (user of users(); track user.id) {
             <tr>
-                <!-- TODO: fetch type user and display type user name -->
                 <td>{{user.typeUser.typeName}}</td>
-                <td>{{user.firstName}}</td>
-                <td>{{user.lastName}}</td>
-                <td>{{user.email}}</td>
+                <td><a class="user-details-link" routerLink="/user-details/{{user.id}}">{{user.firstName}}</a></td>
+                <td><a class="user-details-link" routerLink="/user-details/{{user.id}}">{{user.lastName}}</a></td>
+                <td><a class="user-details-link" routerLink="/user-details/{{user.id}}">{{user.email}}</a></td>
                 <td>
                     <a routerLink="/user-form/{{user.id}}">
                         <button class="btn btn-primary btn-sm">Edit</button>
