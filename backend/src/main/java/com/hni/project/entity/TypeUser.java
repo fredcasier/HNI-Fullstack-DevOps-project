@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +27,8 @@ public class TypeUser {
     private long id;
 
     @Column (name="type_name")
+    @NotBlank
+    @Size(max = 50)
     private String typeName;
 
     @OneToMany (mappedBy = "typeUser", cascade = CascadeType.REMOVE)
