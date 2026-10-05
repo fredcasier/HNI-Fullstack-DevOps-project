@@ -1,5 +1,7 @@
 package com.hni.project.dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Query(value = "UPDATE `user` SET type_id = :typeUserId WHERE id = :userId", nativeQuery = true)
     int updateTypeUser(@Param("userId") Long userId, @Param("typeUserId") Long typeUserId);
+
+    Page<User> findByTypeUserId(@Param ("id") Long id, Pageable pageable);
+
 }
