@@ -1,5 +1,12 @@
 <div>
+    @if (typeUserId() !== null) {
+    <h3>Users with type "{{ typeUserName() }}"</h3>
+    <a routerLink="/types">
+        <button class="btn btn-danger btn-sm">Back to Type user list</button>
+    </a>
+    } @else {
     <h3>User list</h3>
+    }
     @if (!typeUsersLoaded() || !usersLoaded()) {
     <p>Loading data ...</p>
     } @else {
