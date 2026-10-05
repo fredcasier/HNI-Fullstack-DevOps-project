@@ -24,45 +24,55 @@ export class UserList {
     private route: ActivatedRoute,
     private userService: UserService,
     private typeUserService: TypeUserService
-  ){}
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const typeUserId = params.get('typeid');
       this.typeUserId.set(typeUserId === null ? null : Number(typeUserId));
       this.updateTypeUserName();
-      this.listUsers(this.allUsers);
+      this.loadUsers();
     });
-    this.userService.getUsers().subscribe(
-      data => {
-        this.listUsers(data);
-        this.usersLoaded.set(true);
-      });
     this.typeUserService.getUsers().subscribe(
       data => {
         this.typeUsers.set(data);
         this.updateTypeUserName();
         this.typeUsersLoaded.set(true);
-    });
+      });
   }
 
   listUsers(data: User[]) {
     this.allUsers = data;
-    this.users.set(
-      this.typeUserId() === null ? data : data.filter(user => user.typeUser.id === this.typeUserId())
-    );
+    this.users.set(data);
+  }
+
+  private loadUsers() {
+    const typeUserId = this.typeUserId();
+    if (typeUserId === null) {
+      this.userService.getUsers().subscribe(
+        data => {
+          this.listUsers(data);
+          this.usersLoaded.set(true);
+        }
+      )
+    } else {
+      this.userService.getUsersByTypeUserId(typeUserId).subscribe(
+        data => {
+          this.listUsers(data);
+          this.usersLoaded.set(true);
+        }
+      )
+    }
   }
 
   private updateTypeUserName() {
     const typeUserId = this.typeUserId();
     this.typeUserName.set(
-      typeUserId === null
-        ? null
-        : this.typeUsers().find(typeUser => typeUser.id === typeUserId)?.typeName ?? null
+      typeUserId === null ? null : this.typeUsers().find(typeUser => typeUser.id === typeUserId)?.typeName ?? null
     );
   }
 
-  deleteUser(userId : number){
+  deleteUser(userId: number) {
     this.userService.deleteUser(userId).subscribe(
       () => this.listUsers(this.allUsers.filter(user => user.id !== userId))
     );

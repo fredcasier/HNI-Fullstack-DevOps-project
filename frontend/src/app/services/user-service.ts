@@ -18,6 +18,13 @@ export class UserService {
         );
     }
 
+    getUsersByTypeUserId(typeUserId: number) {
+        const searchUrl = this.userUrl + "/search/findByTypeUserId?id=" + typeUserId;
+        return this.httpClient.get<GetResponseUsers>(searchUrl).pipe(
+            map(response => response._embedded.users)
+        )
+    }
+
     getUser(userId: number): Observable<User> {
         const getUrl = this.userUrl + "/" + userId + "?projection=userWithTypeName";
         return this.httpClient.get<User>(getUrl);
