@@ -1,1 +1,14 @@
-<p>user-details works!</p>
+@if (userFound()) {
+<h2>User details</h2>
+<p><strong>Id:</strong> {{user.id}}</p>
+<p><strong>First name:</strong> {{user.firstName}}</p>
+<p><strong>Last name:</strong> {{user.lastName}}</p>
+<p><strong>Email:</strong> {{user.email}}</p>
+<p><strong>Type user:</strong> {{user.typeUser.typeName}}</p>
+} @else {
+<p>User {{userId}} not found</p>
+}
+
+<a routerLink="/users">
+    <button class="btn btn-danger btn-sm">Back to User list</button>
+</a>
