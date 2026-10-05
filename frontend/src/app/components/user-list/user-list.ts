@@ -4,6 +4,7 @@ import { UserService } from '../../services/user-service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TypeUser } from '../../commun/type-user';
 import { TypeUserService } from '../../services/type-user-service';
+import { SortType } from '../../commun/sort-type';
 
 @Component({
   imports: [RouterLink],
@@ -41,6 +42,10 @@ export class UserList {
       });
   }
 
+  get SortType() {
+    return SortType;
+  }
+
   listUsers(data: User[]) {
     this.allUsers = data;
     this.users.set(data);
@@ -76,5 +81,59 @@ export class UserList {
     this.userService.deleteUser(userId).subscribe(
       () => this.listUsers(this.allUsers.filter(user => user.id !== userId))
     );
+  }
+
+  sortByAsc(sortType: SortType) {
+    switch (sortType) {
+      case SortType.TYPENAME:
+        this.users.set(this.users().sort((userA, userB) =>
+          String(userA.typeUser.typeName.toLocaleLowerCase()).localeCompare(String(userB.typeUser.typeName.toLocaleLowerCase()))
+        ));
+        break;
+      case SortType.FIRSTNAME:
+        this.users.set(this.users().sort((userA, userB) =>
+          String(userA.firstName.toLocaleLowerCase()).localeCompare(String(userB.firstName.toLocaleLowerCase()))
+        ));
+        break;
+      case SortType.LASTNAME:
+        this.users.set(this.users().sort((userA, userB) =>
+          String(userA.lastName.toLocaleLowerCase()).localeCompare(String(userB.lastName.toLocaleLowerCase()))
+        ));
+        break;
+      case SortType.EMAIL:
+        this.users.set(this.users().sort((userA, userB) =>
+          String(userA.email.toLocaleLowerCase()).localeCompare(String(userB.email.toLocaleLowerCase()))
+        ));
+        break;
+      default:
+        break;
+    }
+  }
+
+  sortByDesc(sortType: SortType) {
+    switch (sortType) {
+      case SortType.TYPENAME:
+        this.users.set(this.users().sort((userA, userB) =>
+          -1 * String(userA.typeUser.typeName.toLocaleLowerCase()).localeCompare(String(userB.typeUser.typeName.toLocaleLowerCase()))
+        ));
+        break;
+      case SortType.FIRSTNAME:
+        this.users.set(this.users().sort((userA, userB) =>
+          -1 * String(userA.firstName.toLocaleLowerCase()).localeCompare(String(userB.firstName.toLocaleLowerCase()))
+        ));
+        break;
+      case SortType.LASTNAME:
+        this.users.set(this.users().sort((userA, userB) =>
+          -1 * String(userA.lastName.toLocaleLowerCase()).localeCompare(String(userB.lastName.toLocaleLowerCase()))
+        ));
+        break;
+      case SortType.EMAIL:
+        this.users.set(this.users().sort((userA, userB) =>
+          -1 * String(userA.email.toLocaleLowerCase()).localeCompare(String(userB.email.toLocaleLowerCase()))
+        ));
+        break;
+      default:
+        break;
+    }
   }
 }

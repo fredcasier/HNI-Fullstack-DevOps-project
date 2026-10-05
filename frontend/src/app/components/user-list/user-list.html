@@ -17,10 +17,10 @@
     <table>
         <thead>
             <tr>
-                <th>Type user</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Email</th>
+                <th>Type user <span class="sort-arrow" (click)="sortByAsc(SortType.TYPENAME)"> ↑ </span>   <span class="sort-arrow" (click)="sortByDesc(SortType.TYPENAME)"> ↓ </span></th>
+                <th>First name <span class="sort-arrow" (click)="sortByAsc(SortType.FIRSTNAME)"> ↑ </span>   <span class="sort-arrow" (click)="sortByDesc(SortType.FIRSTNAME)"> ↓ </span></th>
+                <th>Last name <span class="sort-arrow" (click)="sortByAsc(SortType.LASTNAME)"> ↑ </span>   <span class="sort-arrow" (click)="sortByDesc(SortType.LASTNAME)"> ↓ </span></th>
+                <th>Email <span class="sort-arrow" (click)="sortByAsc(SortType.EMAIL)"> ↑ </span>   <span class="sort-arrow" (click)="sortByDesc(SortType.EMAIL)"> ↓ </span></th>
                 <th></th>
             </tr>
         </thead>

@@ -8,8 +8,8 @@
     <table>
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
+                <th>Id <span class="sort-arrow" (click)="sortByAsc(SortType.ID)"> ↑ </span> <span class="sort-arrow" (click)="sortByDesc(SortType.ID)"> ↓ </span></th>
+                <th>Name <span class="sort-arrow" (click)="sortByAsc(SortType.TYPENAME)"> ↑ </span> <span class="sort-arrow" (click)="sortByDesc(SortType.TYPENAME)"> ↓ </span></th>
                 <th></th>
             </tr>
         </thead>
