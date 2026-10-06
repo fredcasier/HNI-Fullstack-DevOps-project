@@ -36,7 +36,7 @@ export class UserForm {
   }
 
   manageRequest() {
-    this.typeUserService.getUsers().subscribe(
+    this.typeUserService.getTypeUsers().subscribe(
       data => {
         this.typeUsers.set(data);
         this.existingUser = this.route.snapshot.paramMap.has("id");

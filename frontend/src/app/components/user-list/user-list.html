@@ -45,6 +45,24 @@
             }
         </tbody>
     </table>
+    <div class="footer-pagination">
+        <ngb-pagination [(page)]="pageNumber"
+                        [pageSize]="pageSize"
+                        [collectionSize]="totalElements"
+                        [maxSize]="10"
+                        [boundaryLinks]="true"
+                        (pageChange)="fetchUsers()">
+        </ngb-pagination>
+        <label class="page-size-control">
+            <span>Page size</span>
+            <select #myPageSelect (change)="updatePageSize(myPageSelect.value)">
+                <option>5</option>
+                <option selected="true">10</option>
+                <option>20</option>
+                <option>50</option>
+            </select>
+        </label>
+    </div>
     } @else {
     @if (typeUsers().length === 0) {
     <a class="btn btn-primary list-add-action" routerLink="/type-form">Add new user type</a>

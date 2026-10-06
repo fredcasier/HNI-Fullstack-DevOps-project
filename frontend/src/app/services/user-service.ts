@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { map, Observable, switchMap } from 'rxjs';
 import { User } from '../commun/user';
-import { response } from 'express';
 
 @Service()
 export class UserService {
@@ -16,6 +15,16 @@ export class UserService {
         return this.httpClient.get<GetResponseUsers>(this.userUrl).pipe(
             map(response => response._embedded.users)
         );
+    }
+
+    getUsersByPagination(page: number, pageSize: number, typeUserId: number | null): Observable<GetResponseUsers> {
+        const endpoint = typeUserId === null
+            ? this.userUrl
+            : `${this.userUrl}/search/findByTypeUserId`;
+        const typeUserParam = typeUserId === null ? '' : `&id=${typeUserId}`;
+        const searchUrl = `${endpoint}?page=${page - 1}&size=${pageSize}${typeUserParam}`;
+
+        return this.httpClient.get<GetResponseUsers>(searchUrl);
     }
 
     getUsersByTypeUserId(typeUserId: number) {
@@ -66,6 +75,12 @@ export class UserService {
 interface GetResponseUsers {
     _embedded: {
         users: User[]
+    },
+    page: {
+        size: number,
+        totalElements: number,
+        totalPages: number,
+        number: number
     }
 }
 

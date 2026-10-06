@@ -28,6 +28,24 @@
             }
         </tbody>
     </table>
+    <div class="footer-pagination">
+        <ngb-pagination [(page)]="pageNumber"
+                        [pageSize]="pageSize"
+                        [collectionSize]="totalElements"
+                        [maxSize]="10"
+                        [boundaryLinks]="true"
+                        (pageChange)="fetchTypeUsers()">
+        </ngb-pagination>
+        <label class="page-size-control">
+            <span>Page size</span>
+            <select #myPageSelect (change)="updatePageSize(myPageSelect.value)">
+                <option>5</option>
+                <option selected="true">10</option>
+                <option>20</option>
+                <option>50</option>
+            </select>
+        </label>
+    </div>
     } @else {
     <p>There is no TypeUser, Please add one</p>
     }

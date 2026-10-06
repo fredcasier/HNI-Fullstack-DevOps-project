@@ -9,10 +9,16 @@ export class TypeUserService {
 
     private httpClient = inject(HttpClient);
 
-    getUsers(): Observable<TypeUser[]> {
+    getTypeUsers(): Observable<TypeUser[]> {
         return this.httpClient.get<GetResponseTypeUsers>(this.typeUserUrl).pipe(
             map(response => response._embedded.typeUsers)
         );
+    }
+
+    getTypeUsersByPagination(page: number, pageSize: number): Observable<GetResponseTypeUsers> {
+        const searchUrl = `${this.typeUserUrl}` + `?page=${page - 1}&size=${pageSize}`;
+
+        return this.httpClient.get<GetResponseTypeUsers>(searchUrl);
     }
 
     getTypeUser(typeUserId: number): Observable<TypeUser> {
@@ -40,6 +46,12 @@ export class TypeUserService {
 interface GetResponseTypeUsers {
     _embedded: {
         typeUsers: TypeUser[]
+    },
+    page: {
+        size: number,
+        totalElements: number,
+        totalPages: number,
+        number: number
     }
 }
 

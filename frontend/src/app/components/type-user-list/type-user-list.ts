@@ -3,9 +3,10 @@ import { TypeUser } from '../../commun/type-user';
 import { TypeUserService } from '../../services/type-user-service';
 import { RouterLink } from '@angular/router';
 import { SortType } from '../../commun/sort-type';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  imports: [RouterLink],
+  imports: [RouterLink, NgbModule],
   selector: 'app-type-user-list',
   styleUrl: './type-user-list.css',
   templateUrl: './type-user-list.html',
@@ -14,19 +15,37 @@ export class TypeUserList {
   typeUsers = signal<TypeUser[]>([]);
   typeUsersLoaded = signal(false);
 
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  totalElements: number = 0
+
   constructor(private typeUserService: TypeUserService) { }
 
   ngOnInit() {
-    this.typeUserService.getUsers().subscribe(
-      data => {
-        this.listTypeUsers(data);
-      }
-    );
+    this.fetchTypeUsers()
   }
 
   get SortType() {
     return SortType;
   }
+
+  fetchTypeUsers() {
+    this.typeUserService.getTypeUsersByPagination(this.pageNumber, this.pageSize).subscribe(
+      data => {
+        this.listTypeUsers(data._embedded.typeUsers);
+        this.pageNumber = data.page.number + 1;
+        this.pageSize = data.page.size;
+        this.totalElements = data.page.totalElements;
+      }
+    );
+  }
+
+  updatePageSize(pageSize: string) {
+    this.pageSize = +pageSize;
+    this.pageNumber = 1;
+    this.fetchTypeUsers();
+  }
+
 
   listTypeUsers(data: TypeUser[]) {
     this.typeUsers.set(data);
@@ -76,5 +95,6 @@ export class TypeUserList {
         break;
     }
   }
+
 
 }

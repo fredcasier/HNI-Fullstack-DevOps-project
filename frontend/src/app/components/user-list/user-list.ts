@@ -5,9 +5,10 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TypeUser } from '../../commun/type-user';
 import { TypeUserService } from '../../services/type-user-service';
 import { SortType } from '../../commun/sort-type';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  imports: [RouterLink],
+  imports: [RouterLink, NgbModule],
   selector: 'app-user-list',
   styleUrl: './user-list.css',
   templateUrl: './user-list.html',
@@ -17,9 +18,11 @@ export class UserList {
   typeUsers = signal<TypeUser[]>([]);
   usersLoaded = signal(false);
   typeUsersLoaded = signal(false);
-  private allUsers: User[] = [];
   typeUserId = signal<number | null>(null);
   typeUserName = signal<TypeUser['typeName'] | null>(null);
+  pageNumber = 1;
+  pageSize = 10;
+  totalElements = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,10 +34,11 @@ export class UserList {
     this.route.paramMap.subscribe(params => {
       const typeUserId = params.get('typeid');
       this.typeUserId.set(typeUserId === null ? null : Number(typeUserId));
+      this.pageNumber = 1;
       this.updateTypeUserName();
-      this.loadUsers();
+      this.fetchUsers();
     });
-    this.typeUserService.getUsers().subscribe(
+    this.typeUserService.getTypeUsers().subscribe(
       data => {
         this.typeUsers.set(data);
         this.updateTypeUserName();
@@ -47,27 +51,25 @@ export class UserList {
   }
 
   listUsers(data: User[]) {
-    this.allUsers = data;
     this.users.set(data);
   }
 
-  private loadUsers() {
-    const typeUserId = this.typeUserId();
-    if (typeUserId === null) {
-      this.userService.getUsers().subscribe(
-        data => {
-          this.listUsers(data);
-          this.usersLoaded.set(true);
-        }
-      )
-    } else {
-      this.userService.getUsersByTypeUserId(typeUserId).subscribe(
-        data => {
-          this.listUsers(data);
-          this.usersLoaded.set(true);
-        }
-      )
-    }
+  fetchUsers() {
+    this.userService.getUsersByPagination(this.pageNumber, this.pageSize, this.typeUserId()).subscribe(
+      data => {
+        this.listUsers(data._embedded.users);
+        this.pageNumber = data.page.number + 1;
+        this.pageSize = data.page.size;
+        this.totalElements = data.page.totalElements;
+        this.usersLoaded.set(true);
+      }
+    );
+  }
+
+  updatePageSize(pageSize: string) {
+    this.pageSize = +pageSize;
+    this.pageNumber = 1;
+    this.fetchUsers();
   }
 
   private updateTypeUserName() {
@@ -79,7 +81,12 @@ export class UserList {
 
   deleteUser(userId: number) {
     this.userService.deleteUser(userId).subscribe(
-      () => this.listUsers(this.allUsers.filter(user => user.id !== userId))
+      () => {
+        if (this.users().length === 1 && this.pageNumber > 1) {
+          this.pageNumber--;
+        }
+        this.fetchUsers();
+      }
     );
   }
 

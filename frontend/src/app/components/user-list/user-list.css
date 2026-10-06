@@ -7,3 +7,22 @@
 .sort-arrow {
   cursor: pointer;
 }
+
+.footer-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem 1rem;
+}
+
+.footer-pagination ngb-pagination {
+  margin-bottom: 0;
+}
+
+.page-size-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
